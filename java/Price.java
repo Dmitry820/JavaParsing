@@ -4,6 +4,16 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.datastax.oss.driver.api.core.CqlIdentifier;
+import com.datastax.oss.driver.api.core.CqlSession;
+
+import com.datastax.oss.driver.api.core.cql.ColumnDefinition;
+import com.datastax.oss.driver.api.core.cql.ColumnDefinitions;
+import com.datastax.oss.driver.api.core.cql.ResultSet;
+import com.datastax.oss.driver.api.core.cql.Row;
+
+import com.datastax.oss.driver.api.core.CqlSession;
+
 public class Price {
     public String InstrumentName;
     public String Date;
@@ -11,7 +21,7 @@ public class Price {
     public String AVGPrice;
     public String NetAmountPerDay;
 
-    public static void Show(Price obj){
+    public static void Show(Price obj) {
         System.out.printf(obj.InstrumentName);
         System.out.printf(",");
         System.out.printf(obj.Date);
@@ -54,4 +64,28 @@ public class Price {
         }
         return pricelist;
     }
+
+    public static String InsertPriceTable(Price obj, String name_table) {
+        return "INSERT INTO " + name_table +
+                " (TransactionID, ExecutionEntityName, InstrumentName, InstrumentClass, Quantity, Price, Currency, Datestamp, NetAmount)" +
+                " VALUES (" + obj.InstrumentName + ", '" + obj.Date + "'" +
+                ", '" + obj.Currency + "', '" + obj.AVGPrice +
+                "', " + obj.NetAmountPerDay + ");";
+    }
+
+//    public static List<Price> Select_All_From_Price(CqlSession session, String NAME_TABLE) {
+//        ResultSet result_select_price = session.execute("SELECT * FROM " + NAME_TABLE);
+//        ColumnDefinitions col_price = result_select_price.getColumnDefinitions();
+//        List<Price> read_price_list = new ArrayList<>();
+//
+//        for (Row row : result_select_price) {
+//            int index = 0;
+//            Price read_Price = new Price();
+//            for (ColumnDefinition col : col_price) {
+//                CqlIdentifier name = col.getName();
+//
+//            }
+//            return read_price_list;
+//        }
+//    }
 }

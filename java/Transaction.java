@@ -67,4 +67,12 @@ public class Transaction {
         }
         return transactions;
     }
+    public static String InsertTransactionTable(Transaction obj, String name_table){
+        return "INSERT INTO " + name_table +
+                " (TransactionID, ExecutionEntityName, InstrumentName, InstrumentClass, Quantity, Price, Currency, Datestamp, NetAmount)" +
+                " VALUES (" + obj.TransactionID + ", '" + obj.ExecutionEntityName + "'" +
+                ", '" + obj.InstrumentName + "', '" + obj.InstrumentClassification +
+                "', " + obj.Quantity + ", " +  obj.Price +
+                ", '" + obj.Currency + "', '" + obj.Datestamp + "', " +  obj.NetAmount + ");";
+    }
 }
